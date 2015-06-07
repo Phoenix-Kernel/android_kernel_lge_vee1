@@ -2568,10 +2568,6 @@ int ext4_mb_release(struct super_block *sb)
 	}
 
 	free_percpu(sbi->s_locality_groups);
-#ifndef CONFIG_APPLY_LATEST_KERNEL_PATCHES
-	if (sbi->s_proc)
-		remove_proc_entry("mb_groups", sbi->s_proc);
-#endif
 
 	return 0;
 }
