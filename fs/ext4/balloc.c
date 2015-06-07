@@ -94,8 +94,8 @@ unsigned ext4_num_overhead_clusters(struct super_block *sb,
 		block_cluster = EXT4_B2C(sbi,
 					 ext4_block_bitmap(sb, gdp) - start);
 #else
-		block_cluster = EXT4_B2C(sbi, (start -
-					       ext4_block_bitmap(sb, gdp)));
+		block_cluster = EXT4_B2C(sbi,
+					 ext4_block_bitmap(sb, gdp) - start);
 #endif
 		if (block_cluster < num_clusters)
 			block_cluster = -1;
@@ -111,7 +111,7 @@ unsigned ext4_num_overhead_clusters(struct super_block *sb,
 					 ext4_inode_bitmap(sb, gdp) - start);
 #else
 		inode_cluster = EXT4_B2C(sbi,
-					 start - ext4_inode_bitmap(sb, gdp));
+					 ext4_inode_bitmap(sb, gdp) - start);
 #endif
 		if (inode_cluster < num_clusters)
 			inode_cluster = -1;
@@ -127,7 +127,7 @@ unsigned ext4_num_overhead_clusters(struct super_block *sb,
 #ifdef CONFIG_APPLY_LATEST_KERNEL_PATCHES
 			c = EXT4_B2C(sbi, itbl_blk + i - start);
 #else
-			c = EXT4_B2C(sbi, start - itbl_blk + i);
+			c = EXT4_B2C(sbi, itbl_blk + i - start);
 #endif
 			if ((c < num_clusters) || (c == inode_cluster) ||
 			    (c == block_cluster) || (c == itbl_cluster))
